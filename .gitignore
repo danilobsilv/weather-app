@@ -160,4 +160,3 @@ cython_debug/
 #.idea/
 
 
-weather_api_key.py
