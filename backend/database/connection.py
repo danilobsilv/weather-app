@@ -1,5 +1,8 @@
-import mysql.connector
 from db_keys import database_keys
+
+
+import mysql.connector
+
 
 def database_connect():
       connection = None
