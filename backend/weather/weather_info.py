@@ -1,17 +1,14 @@
-# from weather.weather_api_key import api_key
-
 import requests
 import datetime
-import time
 
 
 class WeatherInfo:
     def __init__(self):
-        self.key = api_key.get("key")
         self.cache = {}
 
-    def call_api(self, latitude, longitude):
-        url = f"http://api.weatherapi.com/v1/current.json?key={self.key}&q={latitude},{longitude}"
+
+    def call_api(self, key, latitude, longitude):
+        url = f"http://api.weatherapi.com/v1/current.json?key={key}&q={latitude},{longitude}"
 
         response = requests.get(url)
         
@@ -26,7 +23,7 @@ class WeatherInfo:
         cache_key = (latitude, longitude)
         if cache_key in self.cache:
             timestamp, data = self.cache[cache_key]
-            # Verificar se a resposta foi armazenada há menos de 5 minutos p/ não precisar chamar de novo 
+            #Check if the answer was stored less than 5 minutes ago so you don't have to call again
             if (datetime.datetime.now() - timestamp).total_seconds() < 300: 
                 return data
             else:
@@ -39,13 +36,13 @@ class WeatherInfo:
         self.cache[cache_key] = (datetime.datetime.now(), data)
 
 
-    def get_temperature(self, latitude, longitude):
+    def get_temperature(self, key, latitude, longitude):
         cached_data = self.get_cached_response(latitude, longitude)
         if cached_data:
             cidade = cached_data['location']['name']
             temperatura_atual = cached_data['current']['temp_c']
         else:
-            dados_climaticos = self.call_api(latitude, longitude)
+            dados_climaticos = self.call_api(key,latitude, longitude)
             if dados_climaticos:
                 cidade = dados_climaticos['location']['name']
                 temperatura_atual = dados_climaticos['current']['temp_c']
@@ -56,13 +53,13 @@ class WeatherInfo:
         return cidade, temperatura_atual
 
 
-    def get_thermal_sensation(self, latitude, longitude):
+    def get_thermal_sensation(self, key, latitude, longitude):
         cached_data = self.get_cached_response(latitude, longitude)
         if cached_data:
             cidade = cached_data['location']['name']
             sensacao_termica = cached_data['current']['feelslike_c']
         else:
-            dados_climaticos = self.call_api(latitude, longitude)
+            dados_climaticos = self.call_api(key, latitude, longitude)
             if dados_climaticos:
                 cidade = dados_climaticos['location']['name']
                 sensacao_termica = dados_climaticos['current']['feelslike_c']
@@ -71,11 +68,3 @@ class WeatherInfo:
                 return None, None
 
         return cidade, sensacao_termica
-    
-    def teste(self):
-        print("o import ta funcionando!")
-
-    def print_chave(self):
-        print(self.key)
-
-
