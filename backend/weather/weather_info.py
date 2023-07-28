@@ -1,12 +1,13 @@
-from backend.weather.weather_api_key import weather_api_key
-from location.get_user_location import get_user_location
+# from weather.weather_api_key import api_key
+
 import requests
 import datetime
 import time
 
+
 class WeatherInfo:
     def __init__(self):
-        self.key = weather_api_key.MY_KEY
+        self.key = api_key.get("key")
         self.cache = {}
 
     def call_api(self, latitude, longitude):
@@ -77,13 +78,4 @@ class WeatherInfo:
     def print_chave(self):
         print(self.key)
 
-latitude, longitude = get_user_location() 
-
-ww = WeatherInfo()
-ww.print_chave()
-start = time.time()
-print(ww.get_temperature(latitude, longitude))
-print(ww.get_thermal_sensation(latitude, longitude))
-end = time.time()
-print(f"Tempo total: {end-start:.2f} segundos")  # medir tempo de resposta da api
 
