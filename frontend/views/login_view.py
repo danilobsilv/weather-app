@@ -8,6 +8,8 @@ class Ui_MainWindow(object):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(692, 600)
+        MainWindow.setMaximumSize(MainWindow.size())
+
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.frame = QFrame(self.centralwidget)
@@ -20,7 +22,7 @@ class Ui_MainWindow(object):
         self.label = QLabel(self.frame)
         self.label.setObjectName(u"label")
         self.label.setGeometry(QRect(140, 40, 361, 181))
-        self.label.setPixmap(QPixmap(u"frontend\images\main.png"))
+        self.label.setPixmap(QPixmap(u"../weather-app/frontend/assets/cloudy_sun_mainscreen.png"))
         self.label.setScaledContents(True)
         self.frame_2 = QFrame(self.frame)
         self.frame_2.setObjectName(u"frame_2")
@@ -53,13 +55,14 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QPushButton:hover{\n"
-"	background-color: rgb(255,255,255);\n"
-"	color: rgb(0,0,0)\n"
+"	background-color: rgb(0,0,0);\n"
+"	color: rgb(255, 255, 255)\n"
 "\n"
 "}\n"
 "\n"
 "\n"
 "	")
+        self.btn_entrar.clicked.connect(self.btn_print)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
@@ -84,3 +87,7 @@ class Ui_MainWindow(object):
         self.txt_password.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Senha", None))
         self.btn_entrar.setText(QCoreApplication.translate("MainWindow", u"Entrar", None))
     # retranslateUi
+
+
+    def btn_print(self):
+        print("Hello World!")
