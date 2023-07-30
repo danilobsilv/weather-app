@@ -1,3 +1,4 @@
+import json
 import requests
 import datetime
 
@@ -42,15 +43,15 @@ class WeatherInfo:
             cidade = cached_data['location']['name']
             temperatura_atual = cached_data['current']['temp_c']
         else:
-            dados_climaticos = self.call_api(key,latitude, longitude)
+            dados_climaticos = self.call_api(key, latitude, longitude)
             if dados_climaticos:
                 cidade = dados_climaticos['location']['name']
                 temperatura_atual = dados_climaticos['current']['temp_c']
                 self.cache_response(latitude, longitude, dados_climaticos)
             else:
-                return None, None
+                return json.dumps({"error": "Erro ao obter dados do clima."})
 
-        return cidade, temperatura_atual
+        return json.dumps({"cidade": cidade, "temperatura_atual": temperatura_atual})
 
 
     def get_thermal_sensation(self, key, latitude, longitude):
@@ -65,6 +66,6 @@ class WeatherInfo:
                 sensacao_termica = dados_climaticos['current']['feelslike_c']
                 self.cache_response(latitude, longitude, dados_climaticos)
             else:
-                return None, None
+                return json.dumps({"error": "Erro ao obter dados do clima."})
 
-        return cidade, sensacao_termica
+        return json.dumps({"cidade": cidade, "sensacao_termica": sensacao_termica})
