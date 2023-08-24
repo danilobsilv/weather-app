@@ -165,5 +165,5 @@ weather_api_key.py
 # ignore the info about the db
 db_keys.py
 
-# ignore the db
+
 weather_app_db.db
