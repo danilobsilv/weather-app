@@ -3,13 +3,17 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
 
-class Ui_MainWindow(object):
+
+class Ui_LoginWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(692, 600)
-        MainWindow.setMaximumSize(MainWindow.size())
-
+        MainWindow.setWindowFlags(
+            Qt.Window |
+            Qt.WindowMinimizeButtonHint |
+            Qt.WindowCloseButtonHint  # Add this line to keep the close button
+        )
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.frame = QFrame(self.centralwidget)
@@ -45,7 +49,7 @@ class Ui_MainWindow(object):
         self.txt_password.setAlignment(Qt.AlignCenter)
         self.btn_entrar = QPushButton(self.frame_2)
         self.btn_entrar.setObjectName(u"btn_entrar")
-        self.btn_entrar.setGeometry(QRect(140, 220, 75, 23))
+        self.btn_entrar.setGeometry(QRect(130, 170, 75, 23))
         self.btn_entrar.setCursor(QCursor(Qt.PointingHandCursor))
         self.btn_entrar.setStyleSheet(u"QPushButton{\n"
 "\n"
@@ -55,14 +59,33 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QPushButton:hover{\n"
-"	background-color: rgb(0,0,0);\n"
-"	color: rgb(255, 255, 255)\n"
+"	background-color: rgb(255,255,255);\n"
+"	color: rgb(0,0,0)\n"
 "\n"
 "}\n"
 "\n"
 "\n"
 "	")
         self.btn_entrar.clicked.connect(self.btn_print)
+        self.btn_criar_conta = QPushButton(self.frame_2)
+        self.btn_criar_conta.setObjectName(u"btn_criar_conta")
+        self.btn_criar_conta.setGeometry(QRect(130, 220, 75, 23))
+        self.btn_criar_conta.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_criar_conta.setStyleSheet(u"QPushButton{\n"
+"\n"
+"	background-color: rgb(255, 255, 255);\n"
+"	color: rgb(0,0,0);\n"
+"	border-radius: 10px\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"	background-color: rgb(255,255,255);\n"
+"	color: rgb(0,0,0)\n"
+"\n"
+"}\n"
+"\n"
+"\n"
+"	")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
@@ -78,7 +101,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("LOGIN", u"LOGIN", None))
         self.label.setText("")
         self.txt_name.setInputMask("")
         self.txt_name.setText("")
@@ -86,8 +109,13 @@ class Ui_MainWindow(object):
         self.txt_password.setText("")
         self.txt_password.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Senha", None))
         self.btn_entrar.setText(QCoreApplication.translate("MainWindow", u"Entrar", None))
-    # retranslateUi
+        self.btn_criar_conta.setText(QCoreApplication.translate("MainWindow", u"Criar conta", None))
 
 
     def btn_print(self):
         print("Hello World!")
+
+
+
+
+        
