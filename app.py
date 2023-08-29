@@ -1,17 +1,17 @@
 import sys
 
-from backend.database.connection import start_connection
+from backend.exceptions.userNotFound import UserNotFound
 
-from backend.weather.weather_info import WeatherInfo
-from backend.weather.weather_api_key import api_key
+from backend.weather.weatherInfo import WeatherInfo
+from backend.weather.weatherApiKey import api_key
 
-from backend.location.get_user_location import get_user_location
+from backend.location.getUserLocation import get_user_location
 
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from frontend.views.login_view import Ui_LoginWindow
+from frontend.views.loginView import Ui_MainWindow
 
 
-from backend.models.user_model import UserModel
+from backend.models.userModel import UserModel
 
 if __name__ == "__main__":
       # lati, longi = get_user_location()
@@ -21,11 +21,19 @@ if __name__ == "__main__":
       # print(ww.get_temperature(api_key.get("key"), lati, longi))
       
 
-      # app = QApplication(sys.argv)
-      # mainWindow = QMainWindow()
-      # ui = Ui_LoginWindow()
-      # ui.setupUi(mainWindow)
-      # mainWindow.show()
-      # sys.exit(app.exec_())
+      app = QApplication(sys.argv)
+      mainWindow = QMainWindow()
+      ui = Ui_MainWindow()
+      ui.setupUi(mainWindow)
+      mainWindow.show()
+      sys.exit(app.exec_())
                    
-      pass
+      # pass
+
+      # from backend.controllers.user_controller import UserController 
+      # user = UserController()
+      # print(user.checkUserEmail("danilobsilv@gmail.com"))
+
+
+      # cont = UserModel()
+      # (cont.get_user_by_id("sksks"))                                                                                                                      
