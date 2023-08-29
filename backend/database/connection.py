@@ -1,5 +1,4 @@
 import sqlite3
-import datetime
 
 connection = sqlite3.connect("weather_app_db.db")
 
@@ -13,3 +12,7 @@ connection.execute("""
         user_creation DATETIME NOT NULL
     )
 """)
+
+
+
+
