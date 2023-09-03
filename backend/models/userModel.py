@@ -1,94 +1,59 @@
 import sqlite3
 import datetime
 
-from backend.exceptions.userNotFound import UserNotFound
-from backend.exceptions.sqliteError import SQLiteException
-
+from backend.exceptions.exceptions import ErrorException
 
 class UserModel:
       def __init__(self):
             self.db_path = "weather_app_db.db"
 
-      
-      def create_user(self, email, username, password):
-        
+      def _execute_query(self, query, params=None):
             try:
-         
-                  connection = sqlite3.connect(self.db_path)
-                  current_date = datetime.datetime.now()
+                  with sqlite3.connect(self.db_path) as connection:
+                        if params is None:
+                              cursor = connection.execute(query)
+                        else:
+                              cursor = connection.execute(query, params)
+                        return cursor.fetchall()
 
-                  connection.execute("""
-                        INSERT INTO users (user_email, user_name, user_password, user_creation)
-                        VALUES (?, ?, ?, ?)
-                        """, (email, username, password, current_date))
+            except sqlite3.IntegrityError as error:
+                  raise ErrorException(f"DataBase Integrity ERROR: {error}")
 
-                  connection.commit()
-                  print("usuário inserido com sucesso!")
+            except sqlite3.OperationalError as error:
+                  raise ErrorException(f"DataBase Connection ERROR: {error}")
 
+            except sqlite3.DatabaseError as error:
+                  raise ErrorException(f"DataBase ERROR: {error}")
 
             except sqlite3.Error as error:
-                  return f"ERROR --> {error}"
-
+                  raise ErrorException(f"SQLite Query ERROR: {error}")
 
             except Exception as error:
-                  return f"ERROR --> {error}"
+                  raise ErrorException(f"Error: {error}")
 
-
-            finally:
-                  connection.close()
-                  print("conexão fechada com sucesso!")
-
+      def create_user(self, email, username, password):
+                  current_date = datetime.datetime.now()
+                  query = """
+                        INSERT INTO users (user_email, user_name, user_password, user_creation)
+                        VALUES (?, ?, ?, ?)
+                        """
+                  self._execute_query(query, (email, username, password, current_date))
 
       def get_users(self):
-            try:
-                  connection = sqlite3.connect(self.db_path)
-
-                  cursor = connection.execute("SELECT * FROM users")
-                  users = cursor.fetchall()
-                  return users
-            
-            except sqlite3.Error as error:
-                  return f"ERROR --> {error}"
-            
-            finally:
-                  connection.close()
-
-
+            query = "SELECT * FROM users"
+            return self._execute_query(query)
+      
       def get_user_by_id(self, id):
-            try:
-                  connection = sqlite3.connect(self.db_path)
+            query = "SELECT * FROM users WHERE user_id = ?"
+            result = self._execute_query(query, (id,))
 
-                  cursor = connection.execute("SELECT * FROM users WHERE user_id = ?", (id,))
-                  user = cursor.fetchone()
-
-                  if user is None:
-                        raise UserNotFound("usuarop num foi encontrado vivo")        
-                  return user
-
-
-            except sqlite3.Error as error:
-                  raise SQLiteException(f" SQlite error: {error}") 
-
-            finally:
-                  connection.close()
-
-
+            if not result:
+                  raise ErrorException(f"User with ID {id} was not found.")
+            return result[0]
+      
       def get_user_by_email(self, email):
-            try:
-                  connection = sqlite3.connect(self.db_path)
-
-                  cursor = connection.execute("SELECT user_email FROM users WHERE user_email = ?", (email,))
-                  user = cursor.fetchone()
-
-                  if user is None: return "User not found."
-                                          
-                  return user
-
-
-            except sqlite3.Error as error:
-                  return f"ERROR --> {error}"
-
-            finally:
-                  connection.close()
-
-
+        query = "SELECT user_email FROM users WHERE user_email = ?"
+        result = self._execute_query(query, (email,))
+        if not result:
+            raise Exception(f"User with email {email} not found.")
+        return result[0][0]
