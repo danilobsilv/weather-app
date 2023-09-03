@@ -1,4 +1,5 @@
 from backend.models.userModel import UserModel 
+# from frontend.views.loginView import Ui_LoginWindow
 
 
 class UserController:
@@ -6,7 +7,7 @@ class UserController:
             self.user_model = UserModel()
             
 
-      def checkUserEmail(self, email):
+      def check_user_email(self, email):
             try:
                   email_db = self.user_model.get_user_by_email(email)
                   if isinstance(email_db, tuple):
@@ -21,10 +22,10 @@ class UserController:
             except:
                   pass
 
-      def checkUserPassword(self, password):
+      def check_user_password(self, password):
             pass
 
 
 
-
- 
+# log = LoginView()
+# log.sayHi()
