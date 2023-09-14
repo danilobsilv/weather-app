@@ -1,3 +1,9 @@
+<style>
+  p {
+    text-align: justify;
+  }
+</style>
+
 # weather-app
 <h1>This repository contains the code for a weather application focused on backend features, using free APIs and SQLite3</h1>
 <br>
