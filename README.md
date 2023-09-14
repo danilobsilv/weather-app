@@ -1,2 +1,3 @@
 # weather-app
-this repo contais the code of a weather application 
+<h1>este repositório contém o código de um aplicativo meteorológico focado nas features de backend, usando API's gratuitas e SQLite3</h1>
+
