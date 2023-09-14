@@ -168,4 +168,3 @@
 #     def getLineEdit(self):
 #         value = self.lineEdit.text()
 #         print(value)
-#         # print("cuzinho")
